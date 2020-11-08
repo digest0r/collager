@@ -11,11 +11,17 @@ import 'bootstrap/dist/css/bootstrap.css';
 import Admin from "./Admin/Admin";
 import Session from "./Session/Session";
 import CreateSession from './CreateSession/CreateSession';
+import InvalidSession from './Session/InvalidSession';
 
 function App() {
   return (
     <Router>
       <Switch>
+        {/* Test */}
+        <Route path="/invalid">
+          <InvalidSession />
+        </Route>
+
         <Route path="/admin">
           <Admin />
         </Route>
