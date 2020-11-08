@@ -8,10 +8,9 @@ import {
 
 import 'bootstrap/dist/css/bootstrap.css';
 
-import Home from "./Home";
-import Admin from "./Admin";
-import Session from "./Session";
-import CreateSession from './CreateSession';
+import Admin from "./Admin/Admin";
+import Session from "./Session/Session";
+import CreateSession from './CreateSession/CreateSession';
 
 function App() {
   return (
@@ -27,7 +26,7 @@ function App() {
           <Session />
         </Route>
         <Route path="/">
-          <Home />
+          <p>Home :)</p>
         </Route>
       </Switch>
     </Router >
