@@ -1,11 +1,27 @@
 import React from 'react';
+import {
+  BrowserRouter as Router,
+  Switch,
+  Route,
+} from "react-router-dom";
+
+import Home from "./Home";
+import Admin from "./Admin";
+
 import './App.css';
 
 function App() {
   return (
-    <div className="App">
-      React
-    </div>
+    <Router>
+      <Switch>
+        <Route path="/admin">
+          <Admin />
+        </Route>
+        <Route path="/">
+          <Home />
+        </Route>
+      </Switch>
+    </Router >
   );
 }
 
