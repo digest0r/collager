@@ -13,8 +13,6 @@ import Admin from "./Admin";
 import Session from "./Session";
 import CreateSession from './CreateSession';
 
-import './App.css';
-
 function App() {
   return (
     <Router>
