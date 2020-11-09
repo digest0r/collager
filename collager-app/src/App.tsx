@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import {
   BrowserRouter as Router,
   Switch,
@@ -12,6 +12,7 @@ import Admin from "./Admin/Admin";
 import Session from "./Session/Session";
 import CreateSession from './CreateSession/CreateSession';
 import InvalidSession from './Session/InvalidSession';
+import ActiveSession from './Session/ActiveSession';
 
 function App() {
   return (
@@ -20,6 +21,9 @@ function App() {
         {/* Test */}
         <Route path="/invalid">
           <InvalidSession />
+        </Route>
+        <Route path="/active">
+          <ActiveSession />
         </Route>
 
         <Route path="/admin">

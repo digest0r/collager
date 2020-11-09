@@ -1,4 +1,4 @@
-.invalid-session {
+.InvalidSession {
   height: 100vh;
   display: flex;
   align-items: center;
@@ -6,5 +6,6 @@
 
   &-content {
     font-size: 1.5em;
+    text-align: center;
   }
 }

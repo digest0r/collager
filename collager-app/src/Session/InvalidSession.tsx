@@ -5,8 +5,8 @@ import "./InvalidSession.scss";
 
 const InvalidSession = () => {
   return (
-    <div className="invalid-session">
-      <div className="invalid-session-content">
+    <div className="InvalidSession">
+      <div className="InvalidSession-content">
         <BsExclamationCircle />
 
         <div>Invalid session</div>
