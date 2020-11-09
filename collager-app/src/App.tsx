@@ -23,7 +23,7 @@ function App() {
           <InvalidSession />
         </Route>
         <Route path="/active">
-          <ActiveSession />
+          <ActiveSession sessionId={"sid"}/>
         </Route>
 
         <Route path="/admin">

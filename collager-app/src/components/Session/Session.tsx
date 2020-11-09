@@ -13,7 +13,9 @@ const Session = () => {
   const [isChecked, isValid] = useSocketSession(id);
 
   if (isChecked) {
-    return isValid ? <ActiveSession /> : <InvalidSession />;
+    return isValid ?
+      <ActiveSession sessionId={id} /> :
+      <InvalidSession />;
   }
   else {
     return <SpinnerLoader />;

@@ -51,6 +51,15 @@ io.on('connection', (socket) => {
     })
   })
 
+  socket.on('init', (sessionId) => {
+    session = getSessionById(sessionId)
+
+    // Entered, init state
+    if (session) {
+      socket.emit("install", session)
+    }
+  })
+
   socket.on('test', (got) => {
     socket.emit("testBack", "returned form server")
   })

@@ -10,6 +10,8 @@ interface SessionCheck {
   success: boolean,
 };
 
+export const useSocket = () => socket
+
 export const useSocketSession = (sessionId: string) => {
   const [ isValid, setValid ] = useState<boolean>(false);
   const [ isChecked, setChecked ] = useState<boolean>(false);
