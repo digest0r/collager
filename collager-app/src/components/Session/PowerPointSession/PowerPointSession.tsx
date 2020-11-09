@@ -1,4 +1,4 @@
-import React, { useState, useEffect, MouseEvent } from "react";
+import React, { useState, useEffect, useCallback, MouseEvent } from "react";
 import { throttle } from "lodash";
 import { FaArrowLeft, FaArrowRight } from "react-icons/fa";
 import { useSocket } from "../../../hooks/socket";
@@ -18,6 +18,8 @@ const PowerPointSession = (props: Props) => {
   const [name, setName] = useState<string>("");
   const [imageUrls, setImageUrls] = useState<Array<string>>([]);
   const [selectedIndex, setSelectedIndex] = useState<number>(0);
+  const [cursorX, setCursorX] = useState<number>(0);
+  const [cursorY, setCursorY] = useState<number>(0);
 
   const socket = useSocket();
 
@@ -36,6 +38,14 @@ const PowerPointSession = (props: Props) => {
 
       setSelectedIndex(newSelectedIndex);
     });
+
+    socket.on("cursorMoved", ([ x, y ]: Array<number>) => {
+      setCursorX(x);
+      setCursorY(y);
+
+      console.log("X", x, "Y", y, "done");
+
+    })
   }, [props.sessionId, socket]);
 
   const previous = () => {
@@ -54,19 +64,19 @@ const PowerPointSession = (props: Props) => {
     socket.emit('switch', index);
   };
 
-  const handleMouseOver = throttle((e: MouseEvent) => {
-    // TODO uncomment
+  const handleMouseOver = useCallback(
+    throttle((e: MouseEvent) => {
+      const targetEl: HTMLElement = (e.target as HTMLElement);
+      const rect: DOMRect = targetEl.getBoundingClientRect();
+      const x = Math.floor(e.clientX - rect.left);
+      const y = Math.floor(e.clientY - rect.top);
 
-    // const targetEl: HTMLElement = (e.target as HTMLElement);
-    // const rect: DOMRect = targetEl.getBoundingClientRect();
-    // const x = Math.floor(e.clientX - rect.left);
-    // const y = Math.floor(e.clientY - rect.top);
+      const xNorm = x / targetEl.offsetWidth;
+      const yNorm = y / targetEl.offsetHeight;
 
-    // const xNorm = x / targetEl.offsetWidth;
-    // const yNorm = y / targetEl.offsetHeight;
-
-    // socket.emit('cursor', [xNorm, yNorm]);
-  }, 500);
+      socket.emit('cursor', [xNorm, yNorm]);
+    }, 50),
+    []);
 
   return (
     <div className="powerpoint-session">
@@ -94,7 +104,14 @@ const PowerPointSession = (props: Props) => {
                   src={imageUrls[selectedIndex]}
                   alt=""
                   draggable={false}
-                  onMouseMoveCapture={handleMouseOver}
+                  onMouseMove={handleMouseOver}
+                />
+
+                <img
+                  className="powerpoint-session__canvas-cursor"
+                  src="img/cursor.png"
+                  width="14"
+                  style={{ left: (cursorX * 100) + "%", top: (cursorY * 100) + "%" }}
                 />
               </div>
 

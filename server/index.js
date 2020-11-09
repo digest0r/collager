@@ -68,6 +68,8 @@ io.on('connection', (socket) => {
 
   socket.on('cursor', ([ xNorm, yNorm ]) => {
     console.log("[" + xNorm + " ; " + yNorm + "]")
+
+    socket.broadcast.emit('cursorMoved', [xNorm, yNorm])
   })
 
   socket.on('disconnect', () => {
