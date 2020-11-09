@@ -60,8 +60,10 @@ io.on('connection', (socket) => {
     }
   })
 
-  socket.on('test', (got) => {
-    socket.emit("testBack", "returned form server")
+  socket.on('switch', (index) => {
+    console.log(`[${socket.id}] SWITCH TO:`, index)
+
+    io.emit("selectIndex", index)
   })
 
   socket.on('disconnect', () => {

@@ -19,7 +19,8 @@ type Session = {
 const ActiveSession = (props: Props) => {
   const [name, setName] = useState<string>("");
   const [imageUrls, setImageUrls] = useState<Array<string>>([]);
-  const [selectedIndex, setSelectedIndex ] = useState<number>(0);
+  const [selectedIndex, setSelectedIndex] = useState<number>(0);
+  const [currentIndex, setCurrentIndex] = useState<number>(0);
   const [slider, setSlider] = useState<any>(null);
 
   const socket = useSocket();
@@ -33,34 +34,42 @@ const ActiveSession = (props: Props) => {
       setName(name);
       setImageUrls(imageUrls);
     });
-  }, [props.sessionId, socket]);
 
-  const selectIndex = (index: number) => {
-      console.debug("[Socket]: Selected index " + index);
+    socket.on("selectIndex", (newSelectedIndex: number) => {
+      console.debug("[Socket]: Selected index " + newSelectedIndex);
 
-      setSelectedIndex(index);
-      slider?.slickGoTo(index);
-  };
+      setSelectedIndex(newSelectedIndex);
+      slider?.slickGoTo(newSelectedIndex);
+    });
+  }, [props.sessionId, socket, slider]);
 
   const previous = () => {
-    if (selectedIndex > 0) {
-      setSelectedIndex(selectedIndex - 1);
+    if (currentIndex > 0) {
+      slider?.slickGoTo(currentIndex - 1);
     }
   };
 
   const next = () => {
-    if (selectedIndex < imageUrls.length - 1 ) {
-      setSelectedIndex(selectedIndex + 1);
+    if (currentIndex < imageUrls.length - 1) {
+      slider?.slickGoTo(currentIndex + 1);
     }
+  };
+
+  const select = () => {
+    if (selectedIndex === currentIndex)
+      return;
+
+    socket.emit('switch', currentIndex);
   };
 
   const settings = {
     dots: true,
     infinite: true,
+    fade: true,
     speed: 500,
     slidesToShow: 1,
     slidesToScroll: 1,
-    afterChange: (currentIndex: number) => setSelectedIndex(currentIndex),
+    afterChange: (currentIndex: number) => setCurrentIndex(currentIndex),
   };
 
   const slickClass = 'control-panel__slide'; // TODO add selected class
@@ -82,8 +91,11 @@ const ActiveSession = (props: Props) => {
           <div className="col">
             <div className="control-panel">
               <Slick ref={c => setSlider(c)} {...settings}>
-                {imageUrls.map(imageUrl => (
-                  <div className={slickClass} key={imageUrl}>
+                {imageUrls.map((imageUrl, index) => (
+                  <div
+                    className={slickClass + (index === selectedIndex ? " control-panel__slide--selected" : "")}
+                    key={imageUrl}
+                  >
                     <img src={imageUrl} alt="" />
                   </div>
                 ))}
@@ -91,7 +103,7 @@ const ActiveSession = (props: Props) => {
 
               <div className="control-panel-status">
                 <div className="control-panel-status__current">
-                  <span><FaImage /> {selectedIndex + 1} / {imageUrls.length}</span>
+                  <span><FaImage /> {currentIndex + 1} / {imageUrls.length}</span>
                 </div>
 
                 <div className="control-panel-status__selected">
@@ -105,7 +117,7 @@ const ActiveSession = (props: Props) => {
                 </button>
 
                 <div className="btn-group w-100" role="group">
-                  <button type="button" className="btn btn-success w-100 button-select" onClick={() => selectIndex(selectedIndex)}>
+                  <button type="button" className="btn btn-success w-100 button-select" onClick={() => select()}>
                     <FaEye />
                     <span>Select</span>
                   </button>
