@@ -8,11 +8,11 @@ import {
 
 import 'bootstrap/dist/css/bootstrap.css';
 
-import Admin from "./Admin/Admin";
-import Session from "./Session/Session";
-import CreateSession from './CreateSession/CreateSession';
-import InvalidSession from './Session/InvalidSession';
-import ActiveSession from './Session/ActiveSession';
+import Admin from "./components/Admin/Admin";
+import Session from "./components/Session/Session";
+import CreateSession from './components/CreateSession/CreateSession';
+import InvalidSession from './components/Session/InvalidSession';
+import ActiveSession from './components/Session/ActiveSession';
 
 function App() {
   return (
