@@ -66,6 +66,10 @@ io.on('connection', (socket) => {
     io.emit("selectIndex", index)
   })
 
+  socket.on('cursor', ([ xNorm, yNorm ]) => {
+    console.log("[" + xNorm + " ; " + yNorm + "]")
+  })
+
   socket.on('disconnect', () => {
     console.log(`User left [${socket.id}] -`)
   })

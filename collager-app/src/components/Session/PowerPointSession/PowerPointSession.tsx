@@ -1,4 +1,5 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, MouseEvent } from "react";
+import { throttle } from "lodash";
 import { FaArrowLeft, FaArrowRight } from "react-icons/fa";
 import { useSocket } from "../../../hooks/socket";
 
@@ -53,6 +54,20 @@ const PowerPointSession = (props: Props) => {
     socket.emit('switch', index);
   };
 
+  const handleMouseOver = throttle((e: MouseEvent) => {
+    // TODO uncomment
+
+    // const targetEl: HTMLElement = (e.target as HTMLElement);
+    // const rect: DOMRect = targetEl.getBoundingClientRect();
+    // const x = Math.floor(e.clientX - rect.left);
+    // const y = Math.floor(e.clientY - rect.top);
+
+    // const xNorm = x / targetEl.offsetWidth;
+    // const yNorm = y / targetEl.offsetHeight;
+
+    // socket.emit('cursor', [xNorm, yNorm]);
+  }, 500);
+
   return (
     <div className="powerpoint-session">
       <div className="container-fluid">
@@ -75,7 +90,12 @@ const PowerPointSession = (props: Props) => {
           <div className="col-md-9">
             <div className="powerpoint-session__canvas-wrapper">
               <div className="powerpoint-session__canvas-image">
-                <img src={imageUrls[selectedIndex]} alt="" draggable={false} />
+                <img
+                  src={imageUrls[selectedIndex]}
+                  alt=""
+                  draggable={false}
+                  onMouseMoveCapture={handleMouseOver}
+                />
               </div>
 
               <div className="powerpoint-session__canvas-controls">
