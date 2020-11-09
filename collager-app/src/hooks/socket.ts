@@ -23,7 +23,7 @@ export const useSocketSession = (sessionId: string) => {
       setChecked(true);
       setValid(success);
     });
-  }, []);
+  }, [sessionId]);
 
   return [ isChecked, isValid ];
 };

@@ -1,0 +1,17 @@
+.btn {
+  border-radius: unset;
+  color: #1a1a1a;
+
+  &:hover {
+    background-color: lightblue;
+  }
+}
+
+.btn-separator:after {
+  content: ' ';
+  display: block;
+  background: #ccc;
+  margin: 0 10px;
+  height: 100%;
+  width: 1px;
+}

@@ -5,7 +5,7 @@ import InvalidSession from "./InvalidSession";
 import { useParams } from "react-router-dom";
 import { useSocketSession } from "../../hooks/socket";
 
-import SpinnerLoader from "../global/SpinnerLoader";
+import SpinnerLoader from "../global/SpinnerLoader/SpinnerLoader";
 
 const Session = () => {
   const { id } = useParams<{ id: string }>();

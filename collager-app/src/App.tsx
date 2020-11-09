@@ -3,16 +3,17 @@ import {
   BrowserRouter as Router,
   Switch,
   Route,
-  // useParams,
 } from "react-router-dom";
 
-import 'bootstrap/dist/css/bootstrap.css';
+import "bootstrap/dist/css/bootstrap.css";
+import "./App.scss";
 
 import Admin from "./components/Admin/Admin";
 import Session from "./components/Session/Session";
 import CreateSession from './components/CreateSession/CreateSession';
 import InvalidSession from './components/Session/InvalidSession';
 import ActiveSession from './components/Session/ActiveSession';
+import PowerPointSession from './components/Session/PowerPointSession/PowerPointSession';
 
 function App() {
   return (
@@ -24,6 +25,9 @@ function App() {
         </Route>
         <Route path="/active">
           <ActiveSession sessionId={"sid"}/>
+        </Route>
+        <Route path="/pp">
+          <PowerPointSession sessionId={"123"}/>
         </Route>
 
         <Route path="/admin">

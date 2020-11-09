@@ -1,11 +1,8 @@
 import React, { useState, useEffect } from "react";
-import Slick from "react-slick";
-import { FaImage, FaInfoCircle, FaArrowLeft, FaArrowRight, FaEye, FaExpand } from "react-icons/fa";
-import { useSocket } from "../../hooks/socket";
+import { FaArrowLeft, FaArrowRight } from "react-icons/fa";
+import { useSocket } from "../../../hooks/socket";
 
-import "slick-carousel/slick/slick.css";
-import "slick-carousel/slick/slick-theme.css";
-import "./ActiveSession.scss";
+import "./PowerPointSession.scss";
 
 interface Props {
   sessionId: string,
@@ -16,12 +13,11 @@ type Session = {
   imageUrls: Array<string>,
 };
 
-const ActiveSession = (props: Props) => {
+const PowerPointSession = (props: Props) => {
   const [name, setName] = useState<string>("");
   const [imageUrls, setImageUrls] = useState<Array<string>>([]);
   const [selectedIndex, setSelectedIndex] = useState<number>(0);
-  const [currentIndex, setCurrentIndex] = useState<number>(0);
-  const [slider, setSlider] = useState<any>(null);
+  // const [currentIndex, setCurrentIndex] = useState<number>(0);
 
   const socket = useSocket();
 
@@ -39,52 +35,82 @@ const ActiveSession = (props: Props) => {
       console.debug("[Socket]: Selected index " + newSelectedIndex);
 
       setSelectedIndex(newSelectedIndex);
-      slider?.slickGoTo(newSelectedIndex);
+      // slider?.slickGoTo(newSelectedIndex);
     });
-  }, [props.sessionId, socket, slider]);
+  }, [props.sessionId, socket]);
 
   const previous = () => {
-    if (currentIndex > 0) {
-      slider?.slickGoTo(currentIndex - 1);
+    if (selectedIndex > 0) {
+      select(selectedIndex + 1);
     }
   };
 
   const next = () => {
-    if (currentIndex < imageUrls.length - 1) {
-      slider?.slickGoTo(currentIndex + 1);
+    if (selectedIndex < imageUrls.length - 1) {
+      select(selectedIndex - 1);
     }
   };
 
-  const select = () => {
-    if (selectedIndex === currentIndex)
-      return;
-
-    socket.emit('switch', currentIndex);
+  const select = (index: number) => {
+    socket.emit('switch', index);
   };
 
-  const settings = {
-    dots: true,
-    infinite: true,
-    fade: true,
-    speed: 500,
-    slidesToShow: 1,
-    slidesToScroll: 1,
-    afterChange: (currentIndex: number) => setCurrentIndex(currentIndex),
-  };
+  const imgUrl: string = imageUrls[selectedIndex];
 
   return (
-    <div className="active-session">
-      <div className="container d-sm-none">
+    <div className="powerpoint-session">
+      <div className="container-fluid">
         <div className="row">
-          <div className="col">
-            <h1 className="text-center my-3">{name}</h1>
+          <div className="col-md-3">
+            <div className="powerpoint-session-images">
+              {imageUrls.map((imageUrl, index) => (
+                <div
+                  className={"powerpoint-session__preview-image" + (index === selectedIndex ? " powerpoint-session__preview-image--selected" : "")}
+                  key={imageUrl}
+                  onClick={() => select(index)}
+                >
+                  <div className="powerpoint-session__preview-image-index">{index + 1}</div>
+                  <img src={imageUrl} alt="" draggable={false}/>
+                </div>
+              ))}
+            </div>
+          </div>
+
+          <div className="col-md-9">
+            <div className="powerpoint-session__canvas-wrapper">
+              <div className="powerpoint-session__canvas-image">
+                <img src={imageUrls[selectedIndex]} alt="" draggable={false} />
+              </div>
+
+              <div className="powerpoint-session__canvas-controls">
+                <div className="btn-group" role="group">
+                  <span className="btn-separator" />
+
+                  <button
+                    type="button"
+                    className="btn "
+                    onClick={previous}
+                  ><FaArrowLeft size="30px" /></button>
+
+                  <div className="powerpoint-session__canvas-controls-item px-3">
+                    <span>{selectedIndex + 1} / {imageUrls.length}</span>
+                  </div>
+
+                  <button
+                    type="button"
+                    className="btn "
+                    onClick={next}
+                  ><FaArrowRight size="30px" /></button>
+                </div>
+
+                <span className="btn-separator" />
+              </div>
+            </div>
           </div>
         </div>
-
-        <hr />
       </div>
 
-      <div className="container">
+      {/* <div className="container">
         <div className="row">
           <div className="col">
             <div className="control-panel">
@@ -136,9 +162,9 @@ const ActiveSession = (props: Props) => {
             </div>
           </div>
         </div>
-      </div>
+      </div> */}
     </div>
   );
 };
 
-export default ActiveSession;
+export default PowerPointSession;
