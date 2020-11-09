@@ -17,7 +17,6 @@ const PowerPointSession = (props: Props) => {
   const [name, setName] = useState<string>("");
   const [imageUrls, setImageUrls] = useState<Array<string>>([]);
   const [selectedIndex, setSelectedIndex] = useState<number>(0);
-  // const [currentIndex, setCurrentIndex] = useState<number>(0);
 
   const socket = useSocket();
 
@@ -35,7 +34,6 @@ const PowerPointSession = (props: Props) => {
       console.debug("[Socket]: Selected index " + newSelectedIndex);
 
       setSelectedIndex(newSelectedIndex);
-      // slider?.slickGoTo(newSelectedIndex);
     });
   }, [props.sessionId, socket]);
 
@@ -55,8 +53,6 @@ const PowerPointSession = (props: Props) => {
     socket.emit('switch', index);
   };
 
-  const imgUrl: string = imageUrls[selectedIndex];
-
   return (
     <div className="powerpoint-session">
       <div className="container-fluid">
@@ -70,7 +66,7 @@ const PowerPointSession = (props: Props) => {
                   onClick={() => select(index)}
                 >
                   <div className="powerpoint-session__preview-image-index">{index + 1}</div>
-                  <img src={imageUrl} alt="" draggable={false}/>
+                  <img src={imageUrl} alt="" draggable={false} />
                 </div>
               ))}
             </div>
@@ -88,7 +84,7 @@ const PowerPointSession = (props: Props) => {
 
                   <button
                     type="button"
-                    className="btn "
+                    className="btn"
                     onClick={previous}
                   ><FaArrowLeft size="30px" /></button>
 
@@ -98,7 +94,7 @@ const PowerPointSession = (props: Props) => {
 
                   <button
                     type="button"
-                    className="btn "
+                    className="btn"
                     onClick={next}
                   ><FaArrowRight size="30px" /></button>
                 </div>
@@ -109,60 +105,6 @@ const PowerPointSession = (props: Props) => {
           </div>
         </div>
       </div>
-
-      {/* <div className="container">
-        <div className="row">
-          <div className="col">
-            <div className="control-panel">
-              <Slick ref={c => setSlider(c)} {...settings}>
-                {imageUrls.map((imageUrl, index) => (
-                  <div
-                    className={"control-panel__slide" + (index === selectedIndex ? " control-panel__slide--selected" : "")}
-                    key={imageUrl}
-                  >
-                    <img src={imageUrl} alt="" />
-                  </div>
-                ))}
-              </Slick>
-
-              <div className="control-panel-status">
-                <div className="control-panel-status__current">
-                  <span><FaImage /> {currentIndex + 1} / {imageUrls.length}</span>
-                </div>
-
-                <div className="control-panel-status__selected">
-                  <FaInfoCircle /> {selectedIndex + 1}
-                </div>
-              </div>
-
-              <div className="control-panel-controls">
-                <button className="btn btn-primary w-25 mr-2" onClick={() => previous()}>
-                  <FaArrowLeft />
-                </button>
-
-                <div className="btn-group w-100" role="group">
-                  <button type="button" className="btn btn-success w-100 button-select" onClick={() => select()}>
-                    <FaEye />
-                    <span>Select</span>
-                  </button>
-
-                  <button
-                    type="button"
-                    className="btn btn-success"
-                    title="Fullscreen"
-                  >
-                    <FaExpand />
-                  </button>
-                </div>
-
-                <button className="btn btn-primary w-25 ml-2" onClick={() => next()}>
-                  <FaArrowRight />
-                </button>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div> */}
     </div>
   );
 };
