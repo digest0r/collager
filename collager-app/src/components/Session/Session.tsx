@@ -5,7 +5,7 @@ import InvalidSession from "./InvalidSession";
 import { useParams } from "react-router-dom";
 import { useSocketSession } from "../../hooks/socket";
 
-import "./Session.scss";
+import SpinnerLoader from "../global/SpinnerLoader";
 
 const Session = () => {
   const { id } = useParams<{ id: string }>();
@@ -16,13 +16,7 @@ const Session = () => {
     return isValid ? <ActiveSession /> : <InvalidSession />;
   }
   else {
-    return (
-      <div className="session--loading">
-        <div className="spinner-border" role="status">
-          <span className="sr-only">Loading...</span>
-        </div>
-      </div>
-    );
+    return <SpinnerLoader />;
   }
 };
 
