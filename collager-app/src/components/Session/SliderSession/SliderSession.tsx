@@ -1,11 +1,11 @@
 import React, { useState, useEffect } from "react";
 import Slick from "react-slick";
 import { FaImage, FaInfoCircle, FaArrowLeft, FaArrowRight, FaEye, FaExpand } from "react-icons/fa";
-import { useSocket } from "../../hooks/socket";
+import { useSocket } from "../../../hooks/socket";
 
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
-import "./ActiveSession.scss";
+import "./SliderSession.scss";
 
 interface Props {
   sessionId: string,
@@ -16,7 +16,7 @@ type Session = {
   imageUrls: Array<string>,
 };
 
-const ActiveSession = (props: Props) => {
+const SliderSession = (props: Props) => {
   const [name, setName] = useState<string>("");
   const [imageUrls, setImageUrls] = useState<Array<string>>([]);
   const [selectedIndex, setSelectedIndex] = useState<number>(0);
@@ -141,4 +141,4 @@ const ActiveSession = (props: Props) => {
   );
 };
 
-export default ActiveSession;
+export default SliderSession;
