@@ -1,13 +1,14 @@
-import React from "react";
+import React, { Suspense } from "react";
 import { useParams } from "react-router-dom";
 
 import SpinnerLoader from "../global/SpinnerLoader/SpinnerLoader";
 import InvalidSession from "./InvalidSession";
-import SliderSession from "./SliderSession/SliderSession";
-import PowerPointSession from "./PowerPointSession/PowerPointSession";
-import FullscreenSession from "./FullscreenSession/FullscreenSession";
 
 import { useSocketSession } from "../../hooks/socket";
+
+const SliderSession = React.lazy(() => import('./SliderSession/SliderSession'));
+const PowerPointSession = React.lazy(() => import('./PowerPointSession/PowerPointSession'));
+const FullscreenSession = React.lazy(() => import('./FullscreenSession/FullscreenSession'));
 
 const Session = () => {
   const { mode, id } = useParams<{ mode: string, id: string }>();
@@ -15,16 +16,22 @@ const Session = () => {
   const [isChecked, isValid] = useSocketSession(id);
 
   if (isChecked) {
+    let component = <InvalidSession />;
+
     if (isValid) {
       if (mode === 's')
-        return <SliderSession sessionId={id} />;
+        component = <SliderSession sessionId={id} />;
       else if (mode === 'f')
-        return <FullscreenSession sessionId={id} />;
+        component = <FullscreenSession sessionId={id} />;
       else if (mode === 'pp')
-        return <PowerPointSession sessionId={id} />;
+        component = <PowerPointSession sessionId={id} />;
     }
 
-    return <InvalidSession />;
+    return (
+      <Suspense fallback={<SpinnerLoader />}>
+        {component}
+      </Suspense>
+    )
   }
   else {
     return <SpinnerLoader />;
