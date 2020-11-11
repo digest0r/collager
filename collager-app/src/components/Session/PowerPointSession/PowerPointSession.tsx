@@ -75,7 +75,7 @@ const PowerPointSession = (props: Props) => {
       const yNorm = y / targetEl.offsetHeight;
 
       socket.emit('cursor', [xNorm, yNorm]);
-    }, 50),
+    }, 200),
     []);
 
   return (
@@ -110,6 +110,7 @@ const PowerPointSession = (props: Props) => {
                 <img
                   className="powerpoint-session__canvas-cursor"
                   src="img/cursor.png"
+                  draggable={false}
                   width="14"
                   style={{ left: (cursorX * 100) + "%", top: (cursorY * 100) + "%" }}
                 />
