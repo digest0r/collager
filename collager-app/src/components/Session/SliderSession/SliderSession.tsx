@@ -17,7 +17,6 @@ type Session = {
 };
 
 const SliderSession = (props: Props) => {
-  const [name, setName] = useState<string>("");
   const [imageUrls, setImageUrls] = useState<Array<string>>([]);
   const [selectedIndex, setSelectedIndex] = useState<number>(0);
   const [currentIndex, setCurrentIndex] = useState<number>(0);
@@ -31,7 +30,6 @@ const SliderSession = (props: Props) => {
     socket.on("install", ({ name, imageUrls }: Session) => {
       console.debug("[Socket]: Installing session", name)
 
-      setName(name);
       setImageUrls(imageUrls);
     });
 
@@ -74,16 +72,6 @@ const SliderSession = (props: Props) => {
 
   return (
     <div className="active-session">
-      <div className="container d-sm-none">
-        <div className="row">
-          <div className="col">
-            <h1 className="text-center my-3">{name}</h1>
-          </div>
-        </div>
-
-        <hr />
-      </div>
-
       <div className="container">
         <div className="row">
           <div className="col">

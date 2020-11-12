@@ -9,13 +9,13 @@ interface Props {
   sessionId: string,
 };
 
+// TODO extract type
 type Session = {
   name: string,
   imageUrls: Array<string>,
 };
 
 const PowerPointSession = (props: Props) => {
-  const [name, setName] = useState<string>("");
   const [imageUrls, setImageUrls] = useState<Array<string>>([]);
   const [selectedIndex, setSelectedIndex] = useState<number>(0);
   const [cursorX, setCursorX] = useState<number>(0);
@@ -29,7 +29,6 @@ const PowerPointSession = (props: Props) => {
     socket.on("install", ({ name, imageUrls }: Session) => {
       console.debug("[Socket]: Installing session", name)
 
-      setName(name);
       setImageUrls(imageUrls);
     });
 
@@ -64,6 +63,7 @@ const PowerPointSession = (props: Props) => {
     socket.emit('switch', index);
   };
 
+  // TODO extract to custom hook
   const handleMouseOver = useCallback(
     throttle((e: MouseEvent) => {
       const targetEl: HTMLElement = (e.target as HTMLElement);
@@ -107,6 +107,7 @@ const PowerPointSession = (props: Props) => {
                   onMouseMove={handleMouseOver}
                 />
 
+                {/* TODO extract to a component */}
                 <img
                   className="powerpoint-session__canvas-cursor"
                   src="img/cursor.png"
