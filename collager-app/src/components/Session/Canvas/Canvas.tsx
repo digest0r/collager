@@ -7,6 +7,7 @@ import "./Canvas.scss";
 type Props = {
   imageUrl: string,
   noBackground?: boolean,
+  cursorHighlighted?: boolean,
 };
 
 type Point = {
@@ -42,10 +43,8 @@ const Canvas = (props: Props) => {
     }, 200),
     []);
 
-  console.log("props.noBackground", props.noBackground);
-
-
   const backgroundImage = props.noBackground ? '' : 'url(\'' + props.imageUrl + '\')';
+  const cursorHighlightedClass = props.cursorHighlighted ? ' canvas__cursor--highlighted' : '';
 
   return (
     <div
@@ -61,13 +60,16 @@ const Canvas = (props: Props) => {
           onMouseMove={handleMouseOver}
         />
 
-        <img
-          className="canvas__cursor"
-          src="/img/cursor.png"
-          draggable={false}
-          width="14"
+        <div
+          className={'canvas__cursor' + cursorHighlightedClass}
           style={{ left: (cursor.x * 100) + "%", top: (cursor.y * 100) + "%" }}
-        />
+        >
+          <img
+            src="/img/cursor.png"
+            draggable={false}
+            width="14"
+          />
+        </div>
       </div>
     </div>
   );
