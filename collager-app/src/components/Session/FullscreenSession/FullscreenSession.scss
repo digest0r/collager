@@ -1,5 +1,6 @@
 .fullscreen-session {
   height: 100vh;
+  overflow: hidden;
 
   &__canvas {
     &-wrapper {

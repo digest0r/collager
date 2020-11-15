@@ -66,10 +66,10 @@ io.on('connection', (socket) => {
     io.emit("selectIndex", index)
   })
 
-  socket.on('cursor', ([ xNorm, yNorm ]) => {
-    console.log("[" + xNorm + " ; " + yNorm + "]")
+  socket.on('cursor', ({ x, y }) => {
+    console.log("[" + x + " ; " + y + "]")
 
-    socket.broadcast.emit('cursorMoved', [xNorm, yNorm])
+    socket.broadcast.emit('cursorMoved', { x, y })
   })
 
   socket.on('disconnect', () => {
