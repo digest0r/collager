@@ -8,6 +8,6 @@
   },
   "devDependencies": {},
   "scripts": {
-    "start": "concurrently \"npm start --prefix server\" \"npm start --prefix collager-app\""
+    "start": "npm start --prefix collager-app"
   }
 }
