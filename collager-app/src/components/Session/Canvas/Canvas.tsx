@@ -24,8 +24,6 @@ const Canvas = (props: Props) => {
     socket.on("cursorMoved", ({ x, y }: Point) => {
 
       setCursor({ x, y });
-
-      console.log("X", x, "Y", y, "done");
     })
   }, [socket]);
 
