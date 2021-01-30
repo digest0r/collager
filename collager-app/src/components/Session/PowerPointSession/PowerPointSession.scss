@@ -1,6 +1,6 @@
 .powerpoint-session {
   background-color: #e6e6e6;
-  // height: 100vh;
+  height: 100vh;
 
   &-images {
     border-right: 1px solid #bfbfbf;
@@ -10,8 +10,11 @@
     scrollbar-width: thin;
   }
 
-  &__preview-image {
-    display: flex;
+  &-column__thumbnails {
+    max-width: 380px;
+  }
+
+  &__thumbnail {
     cursor: pointer;
 
     &:not(:first-child) {
@@ -24,13 +27,14 @@
 
     &-index {
       color: #d45739;
-      margin-right: 10px;
-      // transition: all 0.1s;
+      transition: all 0.1s;
+      margin-bottom: 4px;
     }
 
     img {
       outline: 1px solid #c8c6c4;
       transition: all 0.1s;
+      width: 100%;
     }
 
     &--selected &-index {

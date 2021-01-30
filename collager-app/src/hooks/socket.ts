@@ -1,7 +1,8 @@
 import { useState, useEffect } from "react";
 import io from 'socket.io-client';
 
-const ENDPOINT = "http://localhost:3004";
+const PORT = process.env.PORT || 3004;
+const ENDPOINT = `http://192.168.1.32:${PORT}`;
 
 const socket = io(ENDPOINT);
 

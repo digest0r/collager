@@ -38,8 +38,8 @@ const Canvas = (props: Props) => {
       const yNorm = y / targetEl.offsetHeight;
 
       socket.emit('cursor', { x: xNorm, y: yNorm });
-    }, 200),
-    []);
+    }, 50),
+    [socket]);
 
   const backgroundImage = props.noBackground ? '' : 'url(\'' + props.imageUrl + '\')';
   const cursorHighlightedClass = props.cursorHighlighted ? ' canvas__cursor--highlighted' : '';
@@ -53,8 +53,8 @@ const Canvas = (props: Props) => {
         <img
           className="canvas__image"
           src={props.imageUrl}
-          alt=""
-          draggable={false}
+          alt="canvas"
+          draggable="false"
           onMouseMove={handleMouseOver}
         />
 
@@ -64,7 +64,7 @@ const Canvas = (props: Props) => {
         >
           <img
             src="/img/cursor.png"
-            draggable={false}
+            draggable="false"
             width="14"
           />
         </div>

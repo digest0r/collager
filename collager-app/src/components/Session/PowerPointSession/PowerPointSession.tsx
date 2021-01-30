@@ -57,26 +57,27 @@ const PowerPointSession = (props: Props) => {
     <div className="powerpoint-session">
       <div className="container-fluid">
         <div className="row">
-          <div className="col-md-3">
+          <div className="col powerpoint-session-column__thumbnails">
             <div className="powerpoint-session-images">
               {imageUrls.map((imageUrl, index) => (
                 <div
-                  className={"powerpoint-session__preview-image" + (index === selectedIndex ? " powerpoint-session__preview-image--selected" : "")}
+                  className={"powerpoint-session__thumbnail" + (index === selectedIndex ? " powerpoint-session__thumbnail--selected" : "")}
                   key={imageUrl}
                   onClick={() => select(index)}
                 >
-                  <div className="powerpoint-session__preview-image-index">{index + 1}</div>
-                  <img src={imageUrl} alt="" draggable={false} />
+                  <div className="powerpoint-session__thumbnail-index">{index + 1}</div>
+                  <img src={imageUrl} alt="" draggable="false" />
                 </div>
               ))}
             </div>
           </div>
 
-          <div className="col-md-9">
+          <div className="col">
             <div className="powerpoint-session__canvas-wrapper">
               <div className="powerpoint-session__canvas-image">
                 <Canvas
                   imageUrl={imageUrls[selectedIndex]}
+                  cursorHighlighted
                   noBackground
                 />
               </div>

@@ -5,6 +5,8 @@
   &:before {
     position: absolute;
     background-image: var(--bg-image-url);
+    background-repeat: no-repeat;
+    background-size: cover;
     content: ' ';
     width: 100%;
     height: 100%;

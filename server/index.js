@@ -3,6 +3,8 @@ var cors = require('cors');
 var http = require('http').createServer(app);
 var io = require('socket.io')(http);
 
+const PORT = process.env.PORT || 3004;
+
 const activeSessions = [
   {
     id: '123',
@@ -13,7 +15,7 @@ const activeSessions = [
       '/img/эритрея еда.jpg',
       '/img/эритрея коллаж1.jpg',
       '/img/эритрея природа.jpg',
-      // '/img/myslienka-je-materialna-sk-instagram.jpg',
+      '/img/fero.jpg',
     ],
   },
   {
@@ -43,8 +45,6 @@ io.on('connection', (socket) => {
   socket.on('sessionCheck', (sessionId) => {
     session = getSessionById(sessionId)
 
-    console.log("Chceked: ", sessionId, " <- validation");
-
     socket.emit("sessionCheck", {
       id: sessionId,
       success: !!session,
@@ -67,7 +67,7 @@ io.on('connection', (socket) => {
   })
 
   socket.on('cursor', ({ x, y }) => {
-    console.log("[" + x + " ; " + y + "]")
+    // console.log("[" + x + " ; " + y + "]")
 
     socket.broadcast.emit('cursorMoved', { x, y })
   })
@@ -77,6 +77,6 @@ io.on('connection', (socket) => {
   })
 });
 
-http.listen(3004, () => {
-  console.log('listening on *:3004');
+http.listen(PORT, () => {
+  console.log(`listening on *:${PORT}`);
 });

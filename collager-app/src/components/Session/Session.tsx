@@ -10,8 +10,13 @@ const SliderSession = React.lazy(() => import('./SliderSession/SliderSession'));
 const PowerPointSession = React.lazy(() => import('./PowerPointSession/PowerPointSession'));
 const FullscreenSession = React.lazy(() => import('./FullscreenSession/FullscreenSession'));
 
+interface Params {
+  mode: string,
+  id: string,
+}
+
 const Session = () => {
-  const { mode, id } = useParams<{ mode: string, id: string }>();
+  const { mode, id } = useParams<Params>();
 
   const [isChecked, isValid] = useSocketSession(id);
 
